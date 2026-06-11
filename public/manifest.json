@@ -1,0 +1,41 @@
+{
+  "name": "SITREP Los Ríos",
+  "short_name": "SITREP",
+  "description": "Sistema Regional de Reporte de Situación SINAPRED/COGRID Región de Los Ríos",
+  "lang": "es-CL",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#FAFAF7",
+  "theme_color": "#1F3864",
+  "categories": ["government", "productivity", "utilities"],
+  "icons": [
+    {
+      "src": "./icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "./icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "./icons/icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Nuevo SITREP",
+      "short_name": "Nuevo",
+      "description": "Crear un nuevo reporte de situación",
+      "url": "./?action=new"
+    }
+  ]
+}

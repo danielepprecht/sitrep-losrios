@@ -1,0 +1,153 @@
+
+<div class="app">
+
+  <!-- ==================== TOP BAR ==================== -->
+  <div class="topbar">
+    <button class="menu-toggle" id="menu-toggle" onclick="toggleSidebar()" title="Menú" aria-label="Abrir menú">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+    </button>
+    <div class="topbar-brand">
+      <div class="topbar-logo">SR</div>
+      <div class="topbar-title">
+        <strong>SITREP · Los Ríos</strong>
+        <span>Sistema Regional de Reporte de Situación</span>
+      </div>
+    </div>
+
+    <div class="topbar-divider"></div>
+
+    <div class="sitrep-id-block">
+      <div>
+        <div class="label">N° de Reporte</div>
+        <div class="value" id="sitrep-id-display">SITREP-2026-001</div>
+      </div>
+      <svg class="lock-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+        <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+      </svg>
+    </div>
+
+    <span class="status-pill status-draft" id="status-pill">
+      <span class="dot"></span><span id="status-text">Borrador</span>
+    </span>
+
+    <div class="topbar-actions">
+      <button class="btn btn-ghost-light" onclick="createNewSitrep()" title="Nuevo SITREP">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+        Nuevo
+      </button>
+      <button class="btn btn-ghost-light" onclick="saveSitrep(true)" title="Guardar">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg>
+        Guardar
+      </button>
+      <button class="btn btn-ghost-light" onclick="exportJSON()" title="Exportar JSON">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+        JSON
+      </button>
+      <label class="btn btn-ghost-light" style="cursor: pointer;" title="Importar JSON">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+        Importar
+        <input type="file" id="import-input" accept=".json" style="display:none" onchange="importJSON(event)">
+      </label>
+      <button class="btn btn-primary" onclick="generatePDF()" title="Descargar PDF">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="12" y1="18" x2="12" y2="12"></line><polyline points="9 15 12 18 15 15"></polyline></svg>
+        Descargar PDF
+      </button>
+    </div>
+  </div>
+
+  <!-- ==================== MAIN ==================== -->
+  <div class="main">
+
+    <!-- Overlay para cerrar el menú lateral en móvil/tablet -->
+    <div class="sidebar-overlay" id="sidebar-overlay" onclick="closeSidebar()"></div>
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-section">
+        <h3>
+          <span>Mis SITREPs</span>
+          <span style="font-family: var(--font-mono); font-weight: 400; color: var(--text-subtle); text-transform: none; letter-spacing: 0;" id="sitrep-count">0</span>
+        </h3>
+        <div class="sitrep-list" id="sitrep-list">
+          <div class="empty-state">No hay reportes guardados</div>
+        </div>
+      </div>
+
+      <div class="sidebar-section">
+        <h3>Secciones</h3>
+        <nav class="section-nav" id="section-nav"></nav>
+      </div>
+    </aside>
+
+    <!-- CONTENT -->
+    <main class="content" id="content">
+      <div class="content-header">
+        <h1>Reporte de Situación Regional</h1>
+        <p>Complete los campos a medida que disponga de información. El sistema guarda automáticamente cada cambio. Una vez descargado el PDF, puede continuar editando y volver a descargar.</p>
+        <div class="progress-bar">
+          <div class="progress-track"><div class="progress-fill" id="progress-fill"></div></div>
+          <span class="progress-text" id="progress-text">0% completo</span>
+        </div>
+      </div>
+
+      <div id="sections-container"></div>
+    </main>
+
+    <!-- MAP PANEL -->
+    <aside class="map-panel" id="map-panel">
+      <div class="map-header">
+        <h3>Georreferenciación</h3>
+        <p>Clic en el mapa o seleccione una comuna para fijar incidentes.</p>
+      </div>
+      <div class="map-container">
+        <div id="map"></div>
+        <div class="map-toolbar">
+          <button id="add-marker-btn" onclick="toggleAddMarkerMode()">+ Agregar punto</button>
+          <button id="map-expand-btn" onclick="toggleMapFullscreen()" title="Pantalla completa">
+            <svg id="map-expand-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="15 3 21 3 21 9"></polyline><polyline points="9 21 3 21 3 15"></polyline><line x1="21" y1="3" x2="14" y2="10"></line><line x1="3" y1="21" x2="10" y2="14"></line></svg>
+            <svg id="map-collapse-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" style="display: none;"><polyline points="4 14 10 14 10 20"></polyline><polyline points="20 10 14 10 14 4"></polyline><line x1="14" y1="10" x2="21" y2="3"></line><line x1="3" y1="21" x2="10" y2="14"></line></svg>
+            <span id="map-expand-label">Expandir</span>
+          </button>
+        </div>
+      </div>
+      <div class="markers-list">
+        <div class="markers-list-header">
+          <span>Puntos georreferenciados</span>
+          <span style="font-family: var(--font-mono); color: var(--text-subtle);" id="markers-count">0</span>
+        </div>
+        <div id="markers-container"></div>
+      </div>
+    </aside>
+
+  </div>
+</div>
+
+<!-- Botón flotante para abrir el mapa en pantallas pequeñas -->
+<button class="map-fab" id="map-fab" onclick="toggleMapFullscreen()" title="Abrir mapa de georreferenciación" aria-label="Abrir mapa">
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"></polygon><line x1="8" y1="2" x2="8" y2="18"></line><line x1="16" y1="6" x2="16" y2="22"></line></svg>
+</button>
+
+<!-- Toast -->
+<div class="toast" id="toast">
+  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
+  <span id="toast-message">Guardado</span>
+</div>
+
+<!-- Modal de confirmación -->
+<div class="modal-overlay" id="modal">
+  <div class="modal">
+    <div class="modal-header">
+      <h2 id="modal-title">Confirmar</h2>
+      <p id="modal-message"></p>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" onclick="closeModal()">Cancelar</button>
+      <button class="btn btn-primary" id="modal-confirm" style="background: var(--pending);">Confirmar</button>
+    </div>
+  </div>
+</div>
+
+<!-- Plantilla oculta para PDF -->
+<div id="pdf-template"></div>
+

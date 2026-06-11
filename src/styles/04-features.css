@@ -1,0 +1,385 @@
+/* ==========================================================================
+   features.css — Resumen, fuentes auto, matriz de incidentes
+   ========================================================================== */
+/* ============== FUENTES AUTO-CONSOLIDADAS (Punto 1 ← Punto 4) ============== */
+.fuentes-auto {
+  border: 1px solid var(--border-strong);
+  background: linear-gradient(135deg, var(--bg-subtle) 0%, var(--bg-elevated) 100%);
+  border-radius: var(--radius);
+  padding: 8px 10px;
+  min-height: 36px;
+  position: relative;
+}
+.fuentes-auto::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: linear-gradient(180deg, var(--accent), var(--navy));
+  border-radius: var(--radius) 0 0 var(--radius);
+}
+.fuentes-auto-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  padding-left: 4px;
+}
+.fuente-tag {
+  display: inline-flex;
+  align-items: center;
+  background: var(--accent-soft);
+  color: var(--navy-deep);
+  padding: 3px 10px;
+  border-radius: 12px;
+  font-size: 11.5px;
+  font-weight: 500;
+  border: 1px solid color-mix(in srgb, var(--accent) 25%, transparent);
+  letter-spacing: 0.01em;
+}
+.fuentes-auto-empty {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--text-subtle);
+  font-size: 12px;
+  font-style: italic;
+  padding-left: 4px;
+  line-height: 1.4;
+}
+.fuentes-auto-empty svg {
+  flex-shrink: 0;
+  color: var(--accent);
+  margin-top: 1px;
+}
+.fuentes-auto-meta {
+  font-size: 10.5px;
+  color: var(--text-subtle);
+  margin-top: 6px;
+  padding-left: 4px;
+  font-family: var(--font-mono);
+  letter-spacing: 0.02em;
+}
+
+/* ============== RESUMEN POR COMUNA ============== */
+
+/* Badge de estado del resumen general (auto / manual) */
+.resumen-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  padding: 2px 8px;
+  border-radius: 10px;
+  text-transform: none;
+  font-style: normal;
+}
+.resumen-badge-auto {
+  background: var(--confirmed-bg);
+  color: var(--confirmed);
+  border: 1px solid color-mix(in srgb, var(--confirmed) 25%, transparent);
+}
+.resumen-badge-manual {
+  background: var(--preliminary-bg);
+  color: var(--preliminary);
+  border: 1px solid color-mix(in srgb, var(--preliminary) 25%, transparent);
+}
+.resumen-badge svg {
+  flex-shrink: 0;
+}
+
+.resumen-regenerate-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 10px;
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--accent);
+  background: var(--accent-soft);
+  border: 1px solid color-mix(in srgb, var(--accent) 30%, transparent);
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: all 0.15s;
+  font-family: inherit;
+}
+.resumen-regenerate-btn:hover {
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
+}
+.resumen-regenerate-btn:active {
+  transform: scale(0.97);
+}
+.comunas-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 10px;
+}
+.comuna-card {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--c-color);
+  border-radius: var(--radius);
+  padding: 10px 12px;
+  transition: box-shadow 0.15s, border-color 0.15s;
+}
+.comuna-card:hover {
+  box-shadow: var(--shadow);
+}
+.comuna-card-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+.comuna-card-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.comuna-card-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--navy-deep);
+  letter-spacing: -0.01em;
+}
+.comuna-card-text {
+  width: 100%;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  padding: 7px 9px;
+  font-family: inherit;
+  font-size: 12.5px;
+  line-height: 1.5;
+  resize: vertical;
+  min-height: 64px;
+  color: var(--text);
+  background: var(--bg);
+  transition: all 0.1s;
+}
+.comuna-card-text:focus {
+  outline: none;
+  border-color: var(--c-color);
+  background: #fff;
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--c-color) 18%, transparent);
+}
+
+/* ============== MATRIZ DE INCIDENTES ============== */
+.incidentes-table-wrap {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: visible;
+  margin-top: 4px;
+  background: var(--bg-elevated);
+}
+.incidentes-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-size: 12.5px;
+}
+.incidentes-table thead th {
+  background: var(--navy);
+  color: #fff;
+  font-weight: 500;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 10px 12px;
+  text-align: left;
+}
+.incidentes-table thead th:first-child { border-top-left-radius: var(--radius); }
+.incidentes-table thead th:last-child { border-top-right-radius: var(--radius); }
+
+/* Fila con fondo de color suave correspondiente al incidente */
+.inc-row {
+  background: var(--inc-bg);
+  transition: background 0.15s;
+}
+.inc-row:hover {
+  background: var(--inc-bg-hover);
+}
+.inc-row td {
+  border-bottom: 2px solid #fff;
+  vertical-align: middle;
+}
+.inc-cell {
+  padding: 10px 12px;
+}
+.inc-cell:first-child {
+  border-left: 4px solid var(--inc-color);
+  padding-left: 12px;
+}
+
+/* Celda de comunas: badge numerado a la izquierda, multiselect al medio, indicador geo y delete a la derecha */
+.inc-cell-comunas {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.inc-row-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  color: #fff;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  flex-shrink: 0;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+}
+.inc-cell-comunas .multiselect {
+  flex: 1;
+  min-width: 0;
+}
+
+/* Indicador discreto de georreferenciación */
+.inc-geo-indicator {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.inc-geo-ok {
+  background: var(--confirmed-bg);
+  color: var(--confirmed);
+}
+.inc-geo-ok:hover { background: #BBF7D0; }
+.inc-geo-manual {
+  background: var(--accent-soft);
+  color: var(--navy);
+}
+.inc-geo-manual:hover { background: #DCE6F4; }
+.inc-geo-warn {
+  background: var(--preliminary-bg);
+  color: var(--preliminary);
+  animation: warn-pulse 2s ease-in-out infinite;
+}
+.inc-geo-warn:hover { background: #FDE68A; animation: none; }
+.inc-geo-loading {
+  background: var(--bg-subtle);
+  cursor: default;
+}
+@keyframes warn-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(180, 83, 9, 0.3); }
+  50% { box-shadow: 0 0 0 4px rgba(180, 83, 9, 0); }
+}
+
+.inc-row-delete {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  background: transparent;
+  border: none;
+  color: var(--text-subtle);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.1s;
+  flex-shrink: 0;
+  opacity: 0.5;
+}
+.inc-row:hover .inc-row-delete { opacity: 1; }
+.inc-row-delete:hover {
+  background: var(--pending-bg);
+  color: var(--pending);
+}
+
+.inc-sector-input,
+.inc-date-input {
+  width: 100%;
+  border: 1px solid rgba(255,255,255,0.6);
+  background: rgba(255,255,255,0.7);
+  padding: 7px 10px;
+  border-radius: var(--radius-sm);
+  font-size: 12.5px;
+  transition: all 0.1s;
+}
+.inc-sector-input:focus,
+.inc-date-input:focus {
+  outline: none;
+  border-color: var(--inc-color);
+  background: #fff;
+  box-shadow: 0 0 0 2px var(--inc-bg-hover);
+}
+
+.inc-spinner, .inc-geo-loading .spinner,
+.spinner {
+  display: inline-block;
+  width: 11px;
+  height: 11px;
+  border: 2px solid var(--border-strong);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+
+.incidentes-empty {
+  padding: 24px;
+  text-align: center;
+  background: var(--bg-subtle);
+  border: 1px dashed var(--border-strong);
+  border-radius: var(--radius);
+}
+.incidentes-empty p {
+  color: var(--text-muted);
+  font-size: 13px;
+  margin-bottom: 12px;
+}
+
+/* Pin de incidente en el mapa (con color por fila) */
+.inc-pin {
+  width: 28px;
+  height: 28px;
+  border: 2px solid #fff;
+  border-radius: 50% 50% 50% 0;
+  transform: rotate(-45deg);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.inc-pin span {
+  transform: rotate(45deg);
+  color: #fff;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 700;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+}
+.inc-pin-approx {
+  opacity: 0.7;
+  border-style: dashed;
+}
+
+/* =================== TABLET / MÓVIL =================== */
+@media (max-width: 768px) {
+  .comunas-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* La matriz de incidentes es ancha (multiselect + fechas + acciones):
+     se desplaza horizontalmente en vez de comprimirse ilegiblemente */
+  .incidentes-table-wrap {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  .incidentes-table {
+    min-width: 720px;
+  }
+}

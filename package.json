@@ -1,0 +1,27 @@
+{
+  "name": "sitrep-losrios",
+  "version": "1.0.0",
+  "description": "Sistema Regional de Reporte de Situación SINAPRED/COGRID Región de Los Ríos",
+  "private": true,
+  "scripts": {
+    "dev": "node tools/dev-server.js",
+    "build": "node tools/build.js",
+    "check": "node tools/check.js",
+    "preview": "node tools/dev-server.js --dist",
+    "clean": "rm -rf dist"
+  },
+  "keywords": [
+    "sitrep",
+    "senapred",
+    "cogrid",
+    "los-rios",
+    "emergencias",
+    "gestion-riesgo-desastres"
+  ],
+  "author": "SENAPRED Región de Los Ríos",
+  "license": "UNLICENSED",
+  "devDependencies": {},
+  "engines": {
+    "node": ">=18"
+  }
+}

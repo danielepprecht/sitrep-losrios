@@ -1,0 +1,8 @@
+{
+  "recommendations": [
+    "ritwickdey.LiveServer",
+    "esbenp.prettier-vscode",
+    "anthropic.claude-code",
+    "yzhang.markdown-all-in-one"
+  ]
+}

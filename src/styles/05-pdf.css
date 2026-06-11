@@ -1,0 +1,136 @@
+/* ==========================================================================
+   pdf.css — Estilos del template PDF (solo aplicados en .pdf-doc)
+   ========================================================================== */
+/* PDF styles (when applied to print template) */
+.pdf-doc {
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-size: 10pt;
+  color: #18181B;
+  background: #fff;
+  padding: 28px 32px;
+  width: 210mm;
+  box-sizing: border-box;
+}
+.pdf-doc h1 {
+  font-size: 18pt;
+  font-weight: 600;
+  color: #1F3864;
+  text-align: center;
+  margin-bottom: 4px;
+}
+.pdf-doc .pdf-subtitle {
+  text-align: center;
+  font-size: 11pt;
+  color: #3B6FB6;
+  margin-bottom: 4px;
+}
+.pdf-doc .pdf-org {
+  text-align: center;
+  font-size: 9pt;
+  color: #5C5C66;
+  font-style: italic;
+  margin-bottom: 18px;
+  padding-bottom: 14px;
+  border-bottom: 2px solid #1F3864;
+}
+.pdf-doc h2 {
+  font-size: 12pt;
+  font-weight: 600;
+  color: #1F3864;
+  margin: 18px 0 8px;
+  padding-bottom: 4px;
+  border-bottom: 1px solid #D9E2F3;
+}
+.pdf-doc table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 9pt;
+  margin-bottom: 8px;
+}
+.pdf-doc table th {
+  background: #1F3864;
+  color: #fff;
+  padding: 6px 8px;
+  font-weight: 600;
+  text-align: left;
+  font-size: 8.5pt;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+.pdf-doc table td {
+  border: 1px solid #8FAADC;
+  padding: 5px 8px;
+  vertical-align: top;
+}
+.pdf-doc table.kv td:first-child {
+  background: #D9E2F3;
+  font-weight: 600;
+  width: 32%;
+}
+.pdf-doc .pdf-summary-box {
+  border: 1px solid #8FAADC;
+  padding: 12px;
+  border-radius: 4px;
+  background: #FAFAF7;
+  font-size: 9.5pt;
+  line-height: 1.5;
+  white-space: pre-wrap;
+}
+.pdf-doc .pdf-priority-list {
+  list-style: none;
+  padding: 0;
+  counter-reset: pri;
+}
+.pdf-doc .pdf-priority-list li {
+  padding: 6px 8px 6px 32px;
+  position: relative;
+  background: #FAFAF7;
+  margin-bottom: 4px;
+  border-radius: 3px;
+  border-left: 2px solid #1F3864;
+  counter-increment: pri;
+}
+.pdf-doc .pdf-priority-list li::before {
+  content: counter(pri);
+  position: absolute;
+  left: 8px;
+  top: 6px;
+  width: 18px;
+  height: 18px;
+  background: #1F3864;
+  color: #fff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 8pt;
+  font-weight: 600;
+}
+.pdf-doc .pdf-footer {
+  margin-top: 24px;
+  padding-top: 12px;
+  border-top: 1px solid #1F3864;
+  font-size: 8pt;
+  color: #5C5C66;
+  font-style: italic;
+  line-height: 1.5;
+  text-align: justify;
+}
+.pdf-doc .pdf-meta {
+  display: flex;
+  justify-content: space-between;
+  font-size: 8.5pt;
+  color: #5C5C66;
+  margin-bottom: 4px;
+  font-family: 'IBM Plex Mono', monospace;
+}
+.pdf-doc .priority-high { color: #DC2626; font-weight: 600; }
+.pdf-doc .priority-medium { color: #D97706; font-weight: 600; }
+.pdf-doc .priority-low { color: #059669; font-weight: 600; }
+.pdf-doc .pdf-empty { color: #8A8A94; font-style: italic; font-size: 9pt; }
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+

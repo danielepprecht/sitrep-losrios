@@ -1,0 +1,28 @@
+# Build output
+dist/
+
+# Dependencias
+node_modules/
+
+# Logs
+*.log
+npm-debug.log*
+
+# Sistema operativo
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json
+.idea/
+
+# Temporales
+*.tmp
+*.swp
+*~
+
+# Backups del usuario
+backup/
+*.backup.json

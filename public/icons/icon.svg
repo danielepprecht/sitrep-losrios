@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <!-- Fondo institucional -->
+  <rect width="512" height="512" rx="96" fill="#1F3864"/>
+
+  <!-- Acento sutil arriba -->
+  <rect x="0" y="0" width="512" height="6" fill="#3B6FB6"/>
+
+  <!-- Monograma SR centrado -->
+  <text x="256" y="295"
+        font-family="IBM Plex Mono, Menlo, monospace"
+        font-size="180"
+        font-weight="700"
+        fill="#FFFFFF"
+        text-anchor="middle"
+        letter-spacing="-4">SR</text>
+
+  <!-- Subtítulo institucional -->
+  <text x="256" y="370"
+        font-family="IBM Plex Sans, Helvetica, sans-serif"
+        font-size="32"
+        font-weight="500"
+        fill="#9AB4D9"
+        text-anchor="middle"
+        letter-spacing="6">SITREP</text>
+
+  <!-- Línea decorativa -->
+  <rect x="186" y="395" width="140" height="2" fill="#3B6FB6"/>
+
+  <!-- Texto inferior -->
+  <text x="256" y="435"
+        font-family="IBM Plex Sans, Helvetica, sans-serif"
+        font-size="22"
+        font-weight="400"
+        fill="#9AB4D9"
+        text-anchor="middle"
+        letter-spacing="2">LOS RÍOS</text>
+</svg>
