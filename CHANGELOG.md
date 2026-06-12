@@ -5,6 +5,15 @@ Todos los cambios notables del proyecto SITREP Los Ríos.
 El formato sigue [Keep a Changelog](https://keepachangelog.com/es/1.1.0/)
 y este proyecto adhiere a [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.2.0] — 2026-06-12
+
+### Características
+- Panel de administración: el administrador puede eliminar el perfil de un usuario registrado (botón "Eliminar" por fila)
+- Panel de administración: exportar el listado de usuarios a un archivo .csv compatible con Excel ("Exportar Excel")
+
+### Correcciones
+- El modal de administración de usuarios ya no queda detrás del panel del mapa (z-index del mapa de Leaflet superaba al de los modales)
+
 ## [1.1.0] — 2026-06-12
 
 ### Características

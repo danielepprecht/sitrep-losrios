@@ -594,7 +594,9 @@
   inset: 0;
   background: rgba(20, 38, 72, 0.4);
   backdrop-filter: blur(4px);
-  z-index: 100;
+  /* Por encima de los controles de Leaflet (z-index hasta 1000), para que
+     el mapa nunca quede sobre un modal abierto. */
+  z-index: 1100;
   display: none;
   align-items: center;
   justify-content: center;

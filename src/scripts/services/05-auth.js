@@ -228,19 +228,24 @@ function closeAdminModal() {
   document.getElementById('admin-modal').classList.remove('visible');
 }
 
+// Último listado de usuarios cargado en el panel de administración (para exportar a Excel).
+let adminUsersCache = [];
+
 async function loadUsersForAdmin() {
   if (!currentUser || currentUser.role !== 'admin') return;
   const tbody = document.getElementById('admin-users-rows');
-  tbody.innerHTML = `<tr><td colspan="6" class="empty-state">Cargando usuarios...</td></tr>`;
+  tbody.innerHTML = `<tr><td colspan="7" class="empty-state">Cargando usuarios...</td></tr>`;
   try {
     const snapshot = await db.collection('usuarios').get();
     if (snapshot.empty) {
-      tbody.innerHTML = `<tr><td colspan="6" class="empty-state">No hay usuarios registrados</td></tr>`;
+      adminUsersCache = [];
+      tbody.innerHTML = `<tr><td colspan="7" class="empty-state">No hay usuarios registrados</td></tr>`;
       return;
     }
     const rows = [];
-    snapshot.forEach(doc => rows.push(doc.data()));
+    snapshot.forEach(doc => rows.push({ uid: doc.id, ...doc.data() }));
     rows.sort((a, b) => (a.nombres || '').localeCompare(b.nombres || '', 'es'));
+    adminUsersCache = rows;
     tbody.innerHTML = rows.map(u => `
       <tr>
         <td>${escapeHtml((u.nombres || '') + ' ' + (u.apellidos || ''))}</td>
@@ -249,12 +254,69 @@ async function loadUsersForAdmin() {
         <td>${escapeHtml(u.profesion || '')}</td>
         <td>${escapeHtml((u.comuna || '') + (u.region ? ', ' + u.region : ''))}</td>
         <td>${u.role === 'admin' ? '<span class="badge" style="background: var(--accent-soft); color: var(--navy-deep);">Admin</span>' : 'Usuario'}</td>
+        <td>${u.uid === currentUser.uid ? '' : `<button class="btn btn-ghost-light" title="Eliminar usuario" onclick="deleteAdminUser('${u.uid}', '${escapeHtml((u.nombres || '') + ' ' + (u.apellidos || '')).replace(/'/g, "\\'")}')">Eliminar</button>`}</td>
       </tr>
     `).join('');
   } catch (err) {
     console.error('Error cargando usuarios:', err);
-    tbody.innerHTML = `<tr><td colspan="6" class="empty-state">Error al cargar usuarios. Verifica tu conexión.</td></tr>`;
+    tbody.innerHTML = `<tr><td colspan="7" class="empty-state">Error al cargar usuarios. Verifica tu conexión.</td></tr>`;
   }
+}
+
+/**
+ * Elimina el perfil de un usuario (colección `usuarios`) desde el panel de
+ * administración. No elimina la cuenta de autenticación (Firebase Auth no
+ * permite borrar cuentas de otros usuarios desde el cliente): la persona
+ * deja de poder usar la app porque su perfil ya no existe.
+ */
+function deleteAdminUser(uid, nombre) {
+  showModal({
+    title: 'Eliminar usuario',
+    message: `¿Eliminar a ${nombre || 'este usuario'} del sistema? Dejará de poder ingresar a la app.`,
+    confirmText: 'Eliminar',
+    onConfirm: async () => {
+      try {
+        await db.collection('usuarios').doc(uid).delete();
+        showToast('Usuario eliminado', 'success');
+        loadUsersForAdmin();
+      } catch (err) {
+        console.error('Error eliminando usuario:', err);
+        showToast('No se pudo eliminar el usuario', 'error');
+      }
+    }
+  });
+}
+
+/**
+ * Exporta el listado de usuarios cargado en el panel de administración a un
+ * archivo .csv (compatible con Excel), con BOM UTF-8 para que tildes y ñ se
+ * muestren correctamente.
+ */
+function exportUsersExcel() {
+  if (!adminUsersCache.length) {
+    showToast('No hay usuarios para exportar', 'error');
+    return;
+  }
+  const headers = ['Nombre', 'Apellido', 'RUT', 'Correo', 'Institución', 'Profesión', 'Cargo', 'Región', 'Comuna', 'Teléfono', 'Rol'];
+  const csvEscape = (v) => `"${String(v || '').replace(/"/g, '""')}"`;
+  const lines = [headers.map(csvEscape).join(';')];
+  adminUsersCache.forEach(u => {
+    lines.push([
+      u.nombres, u.apellidos, u.rut, u.correo, u.institucion, u.profesion,
+      u.cargo, u.region, u.comuna, u.telefono,
+      u.role === 'admin' ? 'Admin' : 'Usuario'
+    ].map(csvEscape).join(';'));
+  });
+  const csv = '﻿' + lines.join('\r\n');
+  const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `usuarios_sitrep_${new Date().toISOString().slice(0, 10)}.csv`;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
 }
 
 // ============================================================

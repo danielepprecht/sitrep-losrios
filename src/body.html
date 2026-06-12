@@ -130,13 +130,14 @@
       <div class="data-table-wrap">
         <table class="data-table">
           <thead><tr>
-            <th>Nombre</th><th>Correo</th><th>Institución</th><th>Profesión</th><th>Comuna / Región</th><th>Rol</th>
+            <th>Nombre</th><th>Correo</th><th>Institución</th><th>Profesión</th><th>Comuna / Región</th><th>Rol</th><th>Acción</th>
           </tr></thead>
           <tbody id="admin-users-rows"></tbody>
         </table>
       </div>
     </div>
     <div class="modal-footer">
+      <button class="btn btn-secondary" onclick="exportUsersExcel()">Exportar Excel</button>
       <button class="btn btn-secondary" onclick="closeAdminModal()">Cerrar</button>
     </div>
   </div>

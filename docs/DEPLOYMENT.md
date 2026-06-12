@@ -22,7 +22,27 @@ Antes de ejecutar `npm run build`, completar
   además de `localhost` para pruebas locales.
 - Las reglas de seguridad de Firestore deben estar configuradas (colección
   `usuarios`, un documento por `uid`) para que el registro y el login
-  funcionen correctamente.
+  funcionen correctamente. Desde 1.2.0, el panel de administración permite
+  **eliminar** el perfil de un usuario, por lo que las reglas deben incluir
+  `allow delete` para la cuenta administradora:
+
+  ```
+  rules_version = '2';
+  service cloud.firestore {
+    match /databases/{database}/documents {
+      match /usuarios/{uid} {
+        allow read, write: if request.auth != null && request.auth.uid == uid;
+        allow read, delete: if request.auth != null
+                       && request.auth.token.email == 'danielepprecht@gmail.com';
+      }
+    }
+  }
+  ```
+
+  Eliminar el perfil de un usuario **no elimina su cuenta de Firebase
+  Authentication** (el SDK de cliente no permite borrar cuentas de otros
+  usuarios sin un backend con Admin SDK). El usuario simplemente no podrá
+  volver a ingresar, porque la app exige que exista su perfil en `usuarios`.
 
 ## Opción A: Archivo único distribuido
 
