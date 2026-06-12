@@ -193,6 +193,13 @@
   overflow: hidden;
 }
 
+/* Fondo oscuro del sidebar off-canvas: solo aplica en móvil (ver media
+   query <=768px). Oculto por defecto para que no ocupe una columna del
+   grid de .main en escritorio. */
+.sidebar-overlay {
+  display: none;
+}
+
 /* =================== SIDEBAR =================== */
 .sidebar {
   background: var(--bg-elevated);
