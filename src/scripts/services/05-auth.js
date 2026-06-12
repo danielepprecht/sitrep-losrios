@@ -43,12 +43,12 @@ function watchAuthState() {
 
 function hideAuthOverlay() {
   document.getElementById('auth-overlay').classList.remove('visible');
-  document.querySelector('.app').style.display = '';
+  document.body.classList.add('app-ready');
 }
 
 function showAuthOverlay() {
   document.getElementById('auth-overlay').classList.add('visible');
-  document.querySelector('.app').style.display = 'none';
+  document.body.classList.remove('app-ready');
   setAuthLoading(false);
   showAuthView('login');
 }

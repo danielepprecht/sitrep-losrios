@@ -2,8 +2,10 @@
    auth.css — Overlay de ingreso/registro y modal de administración
    ========================================================================== */
 
-/* La app permanece oculta hasta que el estado de autenticación se resuelve */
-.app { display: none; }
+/* La app permanece oculta hasta que el estado de autenticación se resuelve.
+   Selector más específico que ".app { display: grid }" de layout.css para
+   ganar la cascada sin pisar el "display: grid" una vez autenticado. */
+body:not(.app-ready) .app { display: none; }
 
 .auth-overlay {
   position: fixed;
