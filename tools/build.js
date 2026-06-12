@@ -92,7 +92,7 @@ fs.writeFileSync(outFile, output, 'utf8');
 // =========================================================================
 // 6) Copiar archivos PWA al dist
 // =========================================================================
-const publicFiles = ['manifest.json', 'service-worker.js', '_redirects'];
+const publicFiles = ['manifest.json', 'service-worker.js', '_redirects', 'index.html'];
 publicFiles.forEach(f => {
   const src = path.join(PUBLIC, f);
   if (fs.existsSync(src)) {
