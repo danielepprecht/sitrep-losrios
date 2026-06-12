@@ -2,6 +2,28 @@
 
 Tres rutas de distribución soportadas, en orden de complejidad creciente.
 
+## Requisito previo: configurar Firebase (cuentas de usuario)
+
+Desde la versión 1.1.0, la app requiere una cuenta para ingresar (login,
+registro, recuperación de clave y panel de administración), implementado con
+**Firebase Authentication + Firestore** (plan gratuito "Spark").
+
+Antes de ejecutar `npm run build`, completar
+`src/scripts/config/02-firebase-config.js` con los datos del proyecto Firebase
+(`apiKey`, `authDomain`, `projectId`, `storageBucket`, `messagingSenderId`,
+`appId`) y el correo de la cuenta administradora (`ADMIN_EMAIL`).
+
+**Importante:**
+- El **primer ingreso** de cada dispositivo requiere conexión a internet (para
+  autenticarse contra Firebase). Una vez autenticado, la sesión queda
+  persistida localmente y la app vuelve a abrir sin internet.
+- En Firebase Console → Authentication → Settings → "Authorized domains",
+  agregar el dominio donde se publique la app (ej. `danielepprecht.github.io`),
+  además de `localhost` para pruebas locales.
+- Las reglas de seguridad de Firestore deben estar configuradas (colección
+  `usuarios`, un documento por `uid`) para que el registro y el login
+  funcionen correctamente.
+
 ## Opción A: Archivo único distribuido
 
 **Cuándo:** uso individual, demos, pruebas piloto, envío rápido a una comuna.
@@ -135,4 +157,4 @@ Una vez instalada, la app:
 
 **Fase 3 — Producción (mes 3+):** migrar a servidor institucional propio. Coordinar con TI de la Delegación Presidencial Regional para alojamiento, HTTPS, copia de respaldos.
 
-**Fase 4 — Multi-usuario (futuro):** si emerge la necesidad de que varios usuarios trabajen en el mismo SITREP, agregar backend con base de datos (ver `BACKEND_DESIGN.md` — pendiente).
+**Fase 4 — Cuentas de usuario (implementado en 1.1.0):** sistema de login/registro/administración vía Firebase Authentication + Firestore (ver sección "Requisito previo: configurar Firebase" más arriba). Si en el futuro emerge la necesidad de edición colaborativa del mismo SITREP en tiempo real, evaluar sincronizar el documento del SITREP en Firestore también.

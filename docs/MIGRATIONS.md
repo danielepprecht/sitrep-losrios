@@ -93,9 +93,25 @@ s.afectacion.forEach(row => {
 
 **Nota:** el campo `personas` previo NO se intenta parsear automáticamente. Si un SITREP viejo tenía "12 / 5", queda como "12 / 5" en personas y `viviendas` vacío. El usuario puede ajustarlo manualmente.
 
+## M07 — Validación: trazabilidad de usuario (`elabUid`, `elabCorreo`, `revUid`, `revCorreo`)
+
+**Versión:** 1.1.0
+**Campos:** `validacion.elabUid`, `validacion.elabCorreo`, `validacion.revUid`, `validacion.revCorreo`
+**Motivo:** con el sistema de cuentas (Firebase Auth), el botón "Usar mis datos" del Punto 13 registra qué usuario autenticado validó el reporte, además del nombre/cargo visibles.
+**Trigger:** `s.validacion.elabUid === undefined`
+
+```js
+if (s.validacion && s.validacion.elabUid === undefined) {
+  s.validacion.elabUid = '';
+  s.validacion.elabCorreo = '';
+  s.validacion.revUid = '';
+  s.validacion.revCorreo = '';
+}
+```
+
 ## Convenciones para futuras migraciones
 
-1. **Numerar** la migración (M07, M08, ...) y agregar al final.
+1. **Numerar** la migración (M08, M09, ...) y agregar al final.
 2. **Documentar trigger** explícito (`typeof ... === undefined` o similar).
 3. **No borrar campos viejos**. Si un campo se reemplaza, dejar el original y agregar el nuevo. La migración solo lee el viejo y popula el nuevo.
 4. **Idempotente**: ejecutar la migración dos veces debe dar el mismo resultado.

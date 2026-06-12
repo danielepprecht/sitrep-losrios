@@ -61,8 +61,8 @@ function emptySitrep(id) {
     observaciones: '',
     distribucion: [],
     validacion: {
-      elabNombre: '', elabCargo: '', elabFecha: '',
-      revNombre: '',  revCargo: '',  revFecha: ''
+      elabNombre: '', elabCargo: '', elabFecha: '', elabUid: '', elabCorreo: '',
+      revNombre: '',  revCargo: '',  revFecha: '',  revUid: '',  revCorreo: ''
     },
     markers: [],
     status: 'Borrador'

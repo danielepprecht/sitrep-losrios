@@ -272,7 +272,10 @@ function renderValidacion(s) {
     <div class="section-help">Datos de quien elabora y de quien revisa o aprueba el reporte.</div>
     <div class="field-row cols-2">
       <div>
-        <h4 style="font-size: 12px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 8px;">Elaborado por</h4>
+        <h4 style="font-size: 12px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 8px; display: flex; align-items: center; justify-content: space-between; gap: 8px;">
+          <span>Elaborado por</span>
+          ${currentUser ? `<button type="button" class="add-row-btn" style="margin: 0;" onclick="usarMisDatosValidacion()">Usar mis datos</button>` : ''}
+        </h4>
         <div class="field" style="margin-bottom: 8px;"><label class="field-label">Nombre</label>
           <input class="field-input" type="text" data-bind="validacion.elabNombre" value="${escapeAttr(v.elabNombre)}">
         </div>

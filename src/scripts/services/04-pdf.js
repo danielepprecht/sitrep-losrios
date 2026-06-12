@@ -98,6 +98,43 @@ function buildPDFHtml(s) {
     </tr>`;
   }).join('');
 
+  // Consolidado por servicio y comuna: una fila por cada combinación servicio/comuna,
+  // ordenada alfabéticamente por servicio y luego por comuna.
+  const serviciosConsolidado = [];
+  s.servicios.forEach(r => {
+    const comunasArr = Array.isArray(r.comunas) ? r.comunas : (r.comunas ? [r.comunas] : []);
+    const comunasList = comunasArr.length ? comunasArr : ['—'];
+    comunasList.forEach(comuna => {
+      serviciosConsolidado.push({
+        servicio: r.servicio || '',
+        comuna,
+        estado: r.estado || '',
+        poblacion: r.poblacion || ''
+      });
+    });
+  });
+  serviciosConsolidado.sort((a, b) =>
+    a.servicio.localeCompare(b.servicio, 'es') || a.comuna.localeCompare(b.comuna, 'es')
+  );
+  const serviciosConsolidadoRows = serviciosConsolidado.length === 0
+    ? '<tr><td colspan="4" class="pdf-empty" style="text-align:center;">Sin registros</td></tr>'
+    : serviciosConsolidado.map(r => {
+        let pobHtml = '<span class="pdf-empty">—</span>';
+        if (r.poblacion && !isNaN(parseFloat(r.poblacion))) {
+          const unidad = SERVICIOS_CLIENTES.includes(r.servicio.trim()) ? 'clientes' : 'personas';
+          pobHtml = `<strong>${escape(r.poblacion)}</strong> <span style="font-size: 8pt; color: #5C5C66; font-style: italic;">${unidad}</span>`;
+        } else if (r.poblacion) {
+          pobHtml = escape(r.poblacion);
+        }
+        return `
+    <tr>
+      <td><strong>${escape(r.servicio)}</strong></td>
+      <td>${escape(r.comuna)}</td>
+      <td>${orEmpty(r.estado)}</td>
+      <td>${pobHtml}</td>
+    </tr>`;
+      }).join('');
+
   const accionesRows = s.acciones.length === 0
     ? '<tr><td colspan="6" class="pdf-empty" style="text-align:center;">Sin registros</td></tr>'
     : s.acciones.map(r => `
@@ -287,6 +324,14 @@ function buildPDFHtml(s) {
           <th>Observación</th>
         </tr></thead>
         <tbody>${serviciosRows}</tbody>
+      </table>
+
+      <h3>5.1 Consolidado por servicio y comuna</h3>
+      <table>
+        <thead><tr>
+          <th>Servicio</th><th>Comuna</th><th>Estado</th><th>Población afectada</th>
+        </tr></thead>
+        <tbody>${serviciosConsolidadoRows}</tbody>
       </table>
 
       <h2>6. Acciones ejecutadas</h2>

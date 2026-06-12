@@ -28,6 +28,49 @@ function escapeAttr(str) {
   return escapeHtml(str);
 }
 
+// ============================================================
+// RUT (Chile): validación y formateo
+// ============================================================
+/**
+ * Valida un RUT chileno con dígito verificador (módulo 11).
+ * Acepta formatos con o sin puntos/guión, ej: "12.345.678-5" o "123456785".
+ */
+function validarRut(rut) {
+  if (!rut) return false;
+  const limpio = String(rut).replace(/[^0-9kK]/g, '').toUpperCase();
+  if (limpio.length < 2) return false;
+  const cuerpo = limpio.slice(0, -1);
+  const dv = limpio.slice(-1);
+  if (!/^\d+$/.test(cuerpo)) return false;
+
+  let suma = 0;
+  let multiplo = 2;
+  for (let i = cuerpo.length - 1; i >= 0; i--) {
+    suma += parseInt(cuerpo[i], 10) * multiplo;
+    multiplo = multiplo === 7 ? 2 : multiplo + 1;
+  }
+  const resto = 11 - (suma % 11);
+  const dvEsperado = resto === 11 ? '0' : resto === 10 ? 'K' : String(resto);
+  return dv === dvEsperado;
+}
+
+/**
+ * Formatea un RUT a "XX.XXX.XXX-X".
+ */
+function formatearRut(rut) {
+  if (!rut) return '';
+  const limpio = String(rut).replace(/[^0-9kK]/g, '').toUpperCase();
+  if (limpio.length < 2) return limpio;
+  const cuerpo = limpio.slice(0, -1);
+  const dv = limpio.slice(-1);
+  let cuerpoFormateado = '';
+  for (let i = 0; i < cuerpo.length; i++) {
+    if (i > 0 && (cuerpo.length - i) % 3 === 0) cuerpoFormateado += '.';
+    cuerpoFormateado += cuerpo[i];
+  }
+  return `${cuerpoFormateado}-${dv}`;
+}
+
 function formatComunasForDisplay(comunas) {
   if (!Array.isArray(comunas) || comunas.length === 0) {
     return '<span class="pdf-empty">—</span>';
@@ -70,5 +113,5 @@ document.getElementById('modal').addEventListener('click', (e) => {
 // ============================================================
 // INICIO
 // ============================================================
-document.addEventListener('DOMContentLoaded', init);
+document.addEventListener('DOMContentLoaded', boot);
 

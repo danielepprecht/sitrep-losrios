@@ -1,4 +1,147 @@
 
+<!-- ==================== AUTH OVERLAY ==================== -->
+<div class="auth-overlay" id="auth-overlay">
+  <div class="auth-card">
+    <div class="auth-brand">
+      <div class="topbar-logo">SR</div>
+      <div class="auth-brand-text">
+        <strong>SITREP · Los Ríos</strong>
+        <span>Sistema Regional de Reporte de Situación</span>
+      </div>
+    </div>
+
+    <!-- LOGIN -->
+    <form id="auth-view-login" class="auth-form" onsubmit="handleLogin(event)">
+      <h2>Ingresar</h2>
+      <div class="field">
+        <label class="field-label">Correo electrónico</label>
+        <input class="field-input" type="email" id="login-email" required autocomplete="username">
+      </div>
+      <div class="field">
+        <label class="field-label">Contraseña</label>
+        <input class="field-input" type="password" id="login-password" required autocomplete="current-password">
+      </div>
+      <div class="auth-error" id="auth-error-login"></div>
+      <button class="btn btn-primary" type="submit">Ingresar</button>
+      <div class="auth-links">
+        <a onclick="showAuthView('recover')">¿Olvidaste tu contraseña?</a>
+        <a onclick="showAuthView('register')">Crear una cuenta</a>
+      </div>
+    </form>
+
+    <!-- REGISTRO -->
+    <form id="auth-view-register" class="auth-form" style="display:none" onsubmit="handleRegister(event)">
+      <h2>Crear cuenta</h2>
+      <div class="field-row cols-2">
+        <div class="field"><label class="field-label">Nombres <span class="required">*</span></label><input class="field-input" type="text" id="reg-nombres" required></div>
+        <div class="field"><label class="field-label">Apellidos <span class="required">*</span></label><input class="field-input" type="text" id="reg-apellidos" required></div>
+      </div>
+      <div class="field-row cols-2">
+        <div class="field"><label class="field-label">RUT (con dígito verificador) <span class="required">*</span></label><input class="field-input" type="text" id="reg-rut" placeholder="12.345.678-5" required></div>
+        <div class="field"><label class="field-label">Correo electrónico <span class="required">*</span></label><input class="field-input" type="email" id="reg-correo" autocomplete="username" required></div>
+      </div>
+      <div class="field-row cols-2">
+        <div class="field"><label class="field-label">Contraseña <span class="required">*</span></label><input class="field-input" type="password" id="reg-password" autocomplete="new-password" required></div>
+        <div class="field"><label class="field-label">Confirmar contraseña <span class="required">*</span></label><input class="field-input" type="password" id="reg-password2" autocomplete="new-password" required></div>
+      </div>
+      <div class="field-row cols-2">
+        <div class="field"><label class="field-label">Institución <span class="required">*</span></label><input class="field-input" type="text" id="reg-institucion" required></div>
+        <div class="field"><label class="field-label">Profesión <span class="required">*</span></label><input class="field-input" type="text" id="reg-profesion" required></div>
+      </div>
+      <div class="field-row cols-2">
+        <div class="field"><label class="field-label">Cargo / función específica <span class="required">*</span></label><input class="field-input" type="text" id="reg-cargo" required></div>
+        <div class="field"><label class="field-label">Teléfono de contacto</label><input class="field-input" type="tel" id="reg-telefono" placeholder="+56 9 ..."></div>
+      </div>
+      <div class="field-row cols-2">
+        <div class="field"><label class="field-label">Región de residencia <span class="required">*</span></label>
+          <select class="field-select" id="reg-region" onchange="onRegionChange()" required>
+            <option value="">— Seleccionar región —</option>
+            <option value="Arica y Parinacota">Arica y Parinacota</option>
+            <option value="Tarapacá">Tarapacá</option>
+            <option value="Antofagasta">Antofagasta</option>
+            <option value="Atacama">Atacama</option>
+            <option value="Coquimbo">Coquimbo</option>
+            <option value="Valparaíso">Valparaíso</option>
+            <option value="Metropolitana de Santiago">Metropolitana de Santiago</option>
+            <option value="Libertador General Bernardo O'Higgins">Libertador General Bernardo O'Higgins</option>
+            <option value="Maule">Maule</option>
+            <option value="Ñuble">Ñuble</option>
+            <option value="Biobío">Biobío</option>
+            <option value="La Araucanía">La Araucanía</option>
+            <option value="Los Ríos">Los Ríos</option>
+            <option value="Los Lagos">Los Lagos</option>
+            <option value="Aysén del General Carlos Ibáñez del Campo">Aysén del General Carlos Ibáñez del Campo</option>
+            <option value="Magallanes y de la Antártica Chilena">Magallanes y de la Antártica Chilena</option>
+          </select>
+        </div>
+        <div class="field"><label class="field-label">Comuna de residencia <span class="required">*</span></label>
+          <select class="field-select" id="reg-comuna-select" style="display:none">
+            <option value="">— Seleccionar comuna —</option>
+            <option value="Valdivia">Valdivia</option>
+            <option value="Corral">Corral</option>
+            <option value="Lanco">Lanco</option>
+            <option value="Los Lagos">Los Lagos</option>
+            <option value="Máfil">Máfil</option>
+            <option value="Mariquina">Mariquina</option>
+            <option value="Paillaco">Paillaco</option>
+            <option value="Panguipulli">Panguipulli</option>
+            <option value="La Unión">La Unión</option>
+            <option value="Futrono">Futrono</option>
+            <option value="Lago Ranco">Lago Ranco</option>
+            <option value="Río Bueno">Río Bueno</option>
+          </select>
+          <input class="field-input" type="text" id="reg-comuna-text" placeholder="Comuna de residencia">
+        </div>
+      </div>
+      <div class="auth-error" id="auth-error-register"></div>
+      <button class="btn btn-primary" type="submit">Crear cuenta</button>
+      <div class="auth-links">
+        <a onclick="showAuthView('login')">Ya tengo una cuenta</a>
+      </div>
+    </form>
+
+    <!-- RECUPERAR CONTRASEÑA -->
+    <form id="auth-view-recover" class="auth-form" style="display:none" onsubmit="handleRecover(event)">
+      <h2>Recuperar contraseña</h2>
+      <p class="auth-help">Ingresa tu correo y te enviaremos un enlace para restablecer tu contraseña.</p>
+      <div class="field">
+        <label class="field-label">Correo electrónico</label>
+        <input class="field-input" type="email" id="recover-email" required>
+      </div>
+      <div class="auth-error" id="auth-error-recover"></div>
+      <button class="btn btn-primary" type="submit">Enviar enlace</button>
+      <div class="auth-links">
+        <a onclick="showAuthView('login')">Volver a ingresar</a>
+      </div>
+    </form>
+
+    <div class="auth-spinner" id="auth-spinner"><div class="spinner"></div></div>
+  </div>
+</div>
+
+<!-- Modal de administración de usuarios -->
+<div class="modal-overlay" id="admin-modal">
+  <div class="modal admin-modal">
+    <div class="modal-header">
+      <h2>Usuarios registrados</h2>
+      <p>Listado de personas registradas en el sistema SITREP Los Ríos.</p>
+    </div>
+    <div class="modal-body">
+      <div class="data-table-wrap">
+        <table class="data-table">
+          <thead><tr>
+            <th>Nombre</th><th>Correo</th><th>Institución</th><th>Profesión</th><th>Comuna / Región</th><th>Rol</th>
+          </tr></thead>
+          <tbody id="admin-users-rows"></tbody>
+        </table>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" onclick="closeAdminModal()">Cerrar</button>
+    </div>
+  </div>
+</div>
+
 <div class="app">
 
   <!-- ==================== TOP BAR ==================== -->
@@ -32,6 +175,15 @@
     </span>
 
     <div class="topbar-actions">
+      <span class="user-badge" id="user-badge"></span>
+      <button class="btn btn-ghost-light" id="admin-btn" onclick="openAdminModal()" style="display:none" title="Administración de usuarios">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+        Usuarios
+      </button>
+      <button class="btn btn-ghost-light" onclick="logoutUser()" title="Cerrar sesión">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+        Salir
+      </button>
       <button class="btn btn-ghost-light" onclick="createNewSitrep()" title="Nuevo SITREP">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
         Nuevo

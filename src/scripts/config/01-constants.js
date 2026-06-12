@@ -44,7 +44,7 @@ const TIPOS_AMENAZA = [
   'Material peligroso', 'Otra'
 ];
 
-const ESTADO_DATO = ['Confirmado', 'Preliminar', 'En evaluación', 'Pendiente'];
+const ESTADO_DATO = ['Confirmado', 'Preliminar / En evaluación'];
 const PRIORIDADES = ['Alta', 'Media', 'Baja'];
 
 // ============================================================

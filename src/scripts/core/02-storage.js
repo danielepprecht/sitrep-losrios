@@ -71,6 +71,13 @@ function loadFromStorage() {
       } else {
         s.resumen = { general: '', porComuna: {}, generalEditado: false };
       }
+      // Migrar validación: agregar trazabilidad de usuario (uid/correo)
+      if (s.validacion && s.validacion.elabUid === undefined) {
+        s.validacion.elabUid = '';
+        s.validacion.elabCorreo = '';
+        s.validacion.revUid = '';
+        s.validacion.revCorreo = '';
+      }
     });
   } catch (e) { console.error('Error cargando estado:', e); }
 }

@@ -11,7 +11,7 @@
  * Versión: incrementar al hacer cambios significativos para invalidar cache.
  */
 
-const VERSION = 'sitrep-losrios-v1';
+const VERSION = 'sitrep-losrios-v2';
 const SHELL_CACHE = `${VERSION}-shell`;
 const RUNTIME_CACHE = `${VERSION}-runtime`;
 
@@ -50,6 +50,15 @@ self.addEventListener('fetch', event => {
   // Bypass: geocodificadores siempre directos
   if (url.hostname.includes('nominatim.openstreetmap.org') ||
       url.hostname.includes('photon.komoot.io')) {
+    return;
+  }
+
+  // Bypass: Firebase (Authentication + Firestore) siempre directos, sin caché
+  if (url.hostname.includes('identitytoolkit.googleapis.com') ||
+      url.hostname.includes('securetoken.googleapis.com') ||
+      url.hostname.includes('firestore.googleapis.com') ||
+      url.hostname.includes('firebaseapp.com') ||
+      (url.hostname.includes('gstatic.com') && url.pathname.includes('/firebasejs/'))) {
     return;
   }
 

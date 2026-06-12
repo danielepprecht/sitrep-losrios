@@ -5,6 +5,16 @@
 // ============================================================
 // CICLO DE VIDA
 // ============================================================
+/**
+ * Punto de entrada real al cargar la página. No inicia la app directamente:
+ * espera el estado de autenticación (ver services/auth.js). Si hay sesión
+ * válida, init() se invoca desde onAuthStateChanged una vez cargado el
+ * perfil del usuario.
+ */
+function boot() {
+  watchAuthState();
+}
+
 function init() {
   loadFromStorage();
   buildSectionNav();

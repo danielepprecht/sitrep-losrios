@@ -5,6 +5,21 @@ Todos los cambios notables del proyecto SITREP Los Ríos.
 El formato sigue [Keep a Changelog](https://keepachangelog.com/es/1.1.0/)
 y este proyecto adhiere a [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.0] — 2026-06-12
+
+### Características
+- Sistema de cuentas de usuario con Firebase Authentication (correo/contraseña) y recuperación de clave por correo
+- Registro de usuario con datos institucionales: nombres, apellidos, RUT (validado con dígito verificador), institución, profesión, cargo, región y comuna de residencia, y teléfono de contacto
+- El perfil del usuario autenticado puede precargar el Punto 13 (Validación) mediante el botón "Usar mis datos"
+- Cuenta de administrador (`danielepprecht@gmail.com`) con acceso a un listado de todos los usuarios registrados
+- Sesión persistente entre dispositivos (móvil, tablet, escritorio) vía Firebase
+- Punto 4: "Estado del dato" simplificado a dos opciones: "Confirmado" y "Preliminar / En evaluación"
+- Punto 5: el PDF exportado consolida los servicios críticos en una tabla ordenada por servicio y luego por comuna
+
+### Requisitos
+- A partir de esta versión, el primer ingreso a la app requiere conexión a internet y una cuenta válida (Firebase Authentication)
+- Quien compile el proyecto debe configurar `src/scripts/config/02-firebase-config.js` con los datos del proyecto Firebase antes de ejecutar `npm run build` (ver `docs/DEPLOYMENT.md`)
+
 ## [1.0.0] — 2026-05-17
 
 ### Hito
