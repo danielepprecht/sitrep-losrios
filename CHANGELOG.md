@@ -14,6 +14,7 @@ y este proyecto adhiere a [Semantic Versioning](https://semver.org/spec/v2.0.0.h
 ### Correcciones
 - El modal de administración de usuarios ya no queda detrás del panel del mapa (z-index del mapa de Leaflet superaba al de los modales)
 - La app ya no se desborda horizontalmente en celulares y tablets (el topbar forzaba un ancho mayor al del viewport)
+- Punto 5 (Estado de servicios críticos): el desplegable de "Comunas afectadas" ya no queda recortado por el borde de la tabla y se muestra completo, tanto en filas existentes como en filas agregadas con "Agregar servicio"
 
 ## [1.1.0] — 2026-06-12
 

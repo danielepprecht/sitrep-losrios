@@ -429,12 +429,16 @@
 .data-table-wrap {
   border: 1px solid var(--border);
   border-radius: var(--radius);
-  overflow: hidden;
+  /* visible (no "hidden"): permite que el menú desplegable de "Comunas
+     afectadas" (posición absoluta) se muestre fuera de los límites de la
+     tabla, en vez de quedar recortado. */
+  overflow: visible;
   margin-top: 8px;
 }
 .data-table {
   width: 100%;
-  border-collapse: collapse;
+  border-collapse: separate;
+  border-spacing: 0;
   font-size: 12.5px;
 }
 .data-table thead th {
@@ -447,6 +451,10 @@
   padding: 9px 10px;
   text-align: left;
 }
+.data-table thead th:first-child { border-top-left-radius: var(--radius); }
+.data-table thead th:last-child { border-top-right-radius: var(--radius); }
+.data-table tbody tr:last-child td:first-child { border-bottom-left-radius: var(--radius); }
+.data-table tbody tr:last-child td:last-child { border-bottom-right-radius: var(--radius); }
 .data-table tbody td {
   padding: 4px 6px;
   border-bottom: 1px solid var(--border);
