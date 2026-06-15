@@ -17,6 +17,7 @@ y este proyecto adhiere a [Semantic Versioning](https://semver.org/spec/v2.0.0.h
 - Punto 5 (Estado de servicios críticos): el desplegable de "Comunas afectadas" ya no queda recortado por el borde de la tabla y se muestra completo, tanto en filas existentes como en filas agregadas con "Agregar servicio"
 - Punto 5: en las últimas 3 filas de la tabla, el desplegable de "Comunas afectadas" se abre hacia arriba en vez de hacia abajo, para que siempre quede visible sin importar cuántos servicios se agreguen
 - Se elimina la barra de desplazamiento horizontal que aparecía en pantallas de 769px a 1279px (laptops/tablets en horizontal): los botones del topbar ("Descargar PDF", etc.) ahora se muestran solo con ícono en ese rango, igual que en celulares
+- Punto 5: se corrige la barra de desplazamiento horizontal que aparecía en PC al permitir que el desplegable de "Comunas afectadas" no quedara recortado; la tabla ahora usa `table-layout: fixed` para no exceder el ancho del contenedor
 
 ## [1.1.0] — 2026-06-12
 
