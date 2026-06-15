@@ -5,6 +5,10 @@
 .app {
   display: grid;
   grid-template-rows: 56px 1fr;
+  /* minmax(0, 1fr) en vez de la columna implícita "auto": evita que el
+     contenido del topbar (botones, etc.) ensanche la grilla más allá del
+     viewport en pantallas angostas. */
+  grid-template-columns: minmax(0, 1fr);
   height: 100vh;
 }
 
@@ -18,6 +22,7 @@
   box-shadow: var(--shadow);
   z-index: 50;
   position: relative;
+  min-width: 0;
 }
 
 /* Botón hamburguesa: solo visible en tablet/móvil (ver media queries) */
@@ -138,6 +143,7 @@
   margin-left: auto;
   display: flex;
   gap: 8px;
+  min-width: 0;
 }
 
 .btn {
@@ -191,6 +197,7 @@
   display: grid;
   grid-template-columns: 280px 1fr 380px;
   overflow: hidden;
+  min-width: 0;
 }
 
 /* Fondo oscuro del sidebar off-canvas: solo aplica en móvil (ver media
