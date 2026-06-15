@@ -114,6 +114,15 @@ function renderSrvComunasMultiselect(row, i) {
   `;
 }
 
+// Filas a partir de las cuales el menú de comunas se abre hacia arriba,
+// para que no quede oculto bajo el borde inferior de la tabla.
+const SRV_DROPUP_LAST_ROWS = 3;
+
+function applySrvDropDirection(ms, i) {
+  const total = document.querySelectorAll('#servicios-rows tr').length;
+  ms.classList.toggle('drop-up', i >= total - SRV_DROPUP_LAST_ROWS);
+}
+
 function toggleSrvMenu(e, i) {
   e.stopPropagation();
   // Cerrar otros
@@ -125,6 +134,7 @@ function toggleSrvMenu(e, i) {
   });
   const ms = document.querySelector(`.srv-multiselect[data-srv-idx="${i}"]`);
   if (!ms) return;
+  applySrvDropDirection(ms, i);
   ms.classList.toggle('open');
   ms.querySelector('.multiselect-trigger').classList.toggle('open', ms.classList.contains('open'));
 }
@@ -177,6 +187,7 @@ function refreshSrvRow(i, keepOpen) {
   if (keepOpen) {
     const ms = document.querySelector(`.srv-multiselect[data-srv-idx="${i}"]`);
     if (ms) {
+      applySrvDropDirection(ms, i);
       ms.classList.add('open');
       ms.querySelector('.multiselect-trigger')?.classList.add('open');
     }

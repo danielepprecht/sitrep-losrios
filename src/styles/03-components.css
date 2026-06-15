@@ -296,6 +296,12 @@
   flex-direction: column;
 }
 .multiselect.open .multiselect-menu { display: flex; }
+/* Para filas cercanas al borde inferior de la tabla, el menú se abre hacia
+   arriba en vez de hacia abajo, para que no quede fuera de la vista. */
+.multiselect.drop-up .multiselect-menu {
+  top: auto;
+  bottom: calc(100% + 4px);
+}
 .multiselect-menu-header {
   display: flex;
   justify-content: space-between;
