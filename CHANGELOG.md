@@ -5,6 +5,14 @@ Todos los cambios notables del proyecto SITREP Los Ríos.
 El formato sigue [Keep a Changelog](https://keepachangelog.com/es/1.1.0/)
 y este proyecto adhiere a [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.3.0] — 2026-06-14
+
+### Características
+- Nuevo botón "Mis SITREP" en la barra superior que abre una ventana con el listado de reportes guardados, cada uno con botones para abrir, descargar en PDF o eliminar
+
+### Cambios
+- Se elimina la columna lateral izquierda ("Mis SITREPs" y "Secciones"), liberando espacio horizontal para los paneles del formulario y el mapa
+
 ## [1.2.0] — 2026-06-12
 
 ### Características

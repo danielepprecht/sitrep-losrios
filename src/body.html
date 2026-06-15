@@ -143,13 +143,31 @@
   </div>
 </div>
 
+<!-- Modal "Mis SITREP" -->
+<div class="modal-overlay" id="sitreps-modal">
+  <div class="modal admin-modal">
+    <div class="modal-header">
+      <h2>
+        Mis SITREP
+        <span style="font-family: var(--font-mono); font-weight: 400; color: var(--text-subtle); text-transform: none; letter-spacing: 0; font-size: 0.8em;" id="sitrep-count">0</span>
+      </h2>
+      <p>Reportes guardados en este dispositivo. Puede abrir, descargar en PDF o eliminar cualquiera de ellos.</p>
+    </div>
+    <div class="modal-body">
+      <div class="sitrep-list" id="sitrep-list">
+        <div class="empty-state">No hay reportes guardados</div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" onclick="closeSitrepsModal()">Cerrar</button>
+    </div>
+  </div>
+</div>
+
 <div class="app">
 
   <!-- ==================== TOP BAR ==================== -->
   <div class="topbar">
-    <button class="menu-toggle" id="menu-toggle" onclick="toggleSidebar()" title="Menú" aria-label="Abrir menú">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
-    </button>
     <div class="topbar-brand">
       <div class="topbar-logo">SR</div>
       <div class="topbar-title">
@@ -189,6 +207,10 @@
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
         Nuevo
       </button>
+      <button class="btn btn-ghost-light" onclick="openSitrepsModal()" title="Mis SITREP">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="8" y1="13" x2="16" y2="13"></line><line x1="8" y1="17" x2="16" y2="17"></line></svg>
+        Mis SITREP
+      </button>
       <button class="btn btn-ghost-light" onclick="saveSitrep(true)" title="Guardar">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg>
         Guardar
@@ -211,27 +233,6 @@
 
   <!-- ==================== MAIN ==================== -->
   <div class="main">
-
-    <!-- Overlay para cerrar el menú lateral en móvil/tablet -->
-    <div class="sidebar-overlay" id="sidebar-overlay" onclick="closeSidebar()"></div>
-
-    <!-- SIDEBAR -->
-    <aside class="sidebar" id="sidebar">
-      <div class="sidebar-section">
-        <h3>
-          <span>Mis SITREPs</span>
-          <span style="font-family: var(--font-mono); font-weight: 400; color: var(--text-subtle); text-transform: none; letter-spacing: 0;" id="sitrep-count">0</span>
-        </h3>
-        <div class="sitrep-list" id="sitrep-list">
-          <div class="empty-state">No hay reportes guardados</div>
-        </div>
-      </div>
-
-      <div class="sidebar-section">
-        <h3>Secciones</h3>
-        <nav class="section-nav" id="section-nav"></nav>
-      </div>
-    </aside>
 
     <!-- CONTENT -->
     <main class="content" id="content">

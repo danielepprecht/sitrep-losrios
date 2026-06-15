@@ -5,8 +5,13 @@
 // ============================================================
 // GENERACIÓN DE PDF
 // ============================================================
-function generatePDF() {
-  const s = getCurrent();
+/**
+ * Genera y descarga el PDF de un SITREP. Por defecto, el SITREP activo;
+ * se puede pasar el id de otro reporte guardado (p. ej. desde el modal
+ * "Mis SITREPs") para descargarlo sin necesidad de abrirlo primero.
+ */
+function generatePDF(id) {
+  const s = id ? state.sitreps[id] : getCurrent();
   if (!s) return;
 
   showToast('Generando PDF...', 'success');

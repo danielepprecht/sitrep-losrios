@@ -17,7 +17,6 @@ function boot() {
 
 function init() {
   loadFromStorage();
-  buildSectionNav();
   renderSitrepList();
 
   // Cargar el último editado o crear uno nuevo
@@ -50,7 +49,7 @@ function loadSitrep(id) {
   saveToStorage();
   renderSitrepList();
   renderCurrentSitrep();
-  closeSidebar();
+  closeSitrepsModal();
 }
 
 function deleteSitrep(id) {
@@ -118,26 +117,29 @@ function renderSitrepList() {
           <div class="sitrep-item-id">${id}</div>
           <div class="sitrep-item-meta">${escapeHtml(event)}</div>
         </div>
-        <button class="sitrep-item-delete" onclick="event.stopPropagation(); deleteSitrep('${id}')" title="Eliminar">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
-        </button>
+        <div class="sitrep-item-actions">
+          <button class="sitrep-item-pdf" onclick="event.stopPropagation(); generatePDF('${id}')" title="Descargar PDF">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="12" y1="18" x2="12" y2="12"></line><polyline points="9 15 12 18 15 15"></polyline></svg>
+          </button>
+          <button class="sitrep-item-delete" onclick="event.stopPropagation(); deleteSitrep('${id}')" title="Eliminar">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+          </button>
+        </div>
       </div>
     `;
   }).join('');
 }
 
 // ============================================================
-// RENDERIZADO: NAVEGACIÓN DE SECCIONES
+// MODAL "MIS SITREP"
 // ============================================================
-function buildSectionNav() {
-  const nav = document.getElementById('section-nav');
-  nav.innerHTML = SECTIONS.map(s => `
-    <a class="section-nav-link" data-section="${s.id}" onclick="scrollToSection('${s.id}')">
-      <span class="section-nav-num">${s.num}.</span>
-      <span style="flex:1;">${s.title}</span>
-      <span class="section-nav-check" id="nav-check-${s.id}"></span>
-    </a>
-  `).join('');
+function openSitrepsModal() {
+  renderSitrepList();
+  document.getElementById('sitreps-modal').classList.add('visible');
+}
+
+function closeSitrepsModal() {
+  document.getElementById('sitreps-modal')?.classList.remove('visible');
 }
 
 function scrollToSection(id) {
@@ -145,23 +147,7 @@ function scrollToSection(id) {
   if (el) {
     el.scrollIntoView({ behavior: 'smooth', block: 'start' });
     if (!el.classList.contains('expanded')) toggleSection(id);
-    document.querySelectorAll('.section-nav-link').forEach(a => a.classList.remove('active'));
-    document.querySelector(`.section-nav-link[data-section="${id}"]`)?.classList.add('active');
   }
-  closeSidebar();
-}
-
-// ============================================================
-// MENÚ LATERAL (móvil/tablet)
-// ============================================================
-function toggleSidebar() {
-  document.getElementById('sidebar')?.classList.toggle('open');
-  document.getElementById('sidebar-overlay')?.classList.toggle('visible');
-}
-
-function closeSidebar() {
-  document.getElementById('sidebar')?.classList.remove('open');
-  document.getElementById('sidebar-overlay')?.classList.remove('visible');
 }
 
 function toggleSection(id) {

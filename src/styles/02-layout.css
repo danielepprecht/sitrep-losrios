@@ -1,5 +1,5 @@
 /* ==========================================================================
-   layout.css — Topbar, sidebar, content, main grid
+   layout.css — Topbar, content, main grid
    ========================================================================== */
 /* =================== LAYOUT =================== */
 .app {
@@ -23,23 +23,6 @@
   z-index: 50;
   position: relative;
   min-width: 0;
-}
-
-/* Botón hamburguesa: solo visible en tablet/móvil (ver media queries) */
-.menu-toggle {
-  display: none;
-  align-items: center;
-  justify-content: center;
-  width: 36px;
-  height: 36px;
-  flex-shrink: 0;
-  border-radius: var(--radius);
-  color: #fff;
-  background: rgba(255,255,255,0.06);
-  border: 1px solid rgba(255,255,255,0.12);
-}
-.menu-toggle:hover {
-  background: rgba(255,255,255,0.12);
 }
 
 .topbar-brand {
@@ -195,44 +178,12 @@
 /* =================== MAIN =================== */
 .main {
   display: grid;
-  grid-template-columns: 280px 1fr 380px;
+  grid-template-columns: 1fr 380px;
   overflow: hidden;
   min-width: 0;
 }
 
-/* Fondo oscuro del sidebar off-canvas: solo aplica en móvil (ver media
-   query <=768px). Oculto por defecto para que no ocupe una columna del
-   grid de .main en escritorio. */
-.sidebar-overlay {
-  display: none;
-}
-
-/* =================== SIDEBAR =================== */
-.sidebar {
-  background: var(--bg-elevated);
-  border-right: 1px solid var(--border);
-  overflow-y: auto;
-  display: flex;
-  flex-direction: column;
-}
-
-.sidebar-section {
-  padding: 16px;
-  border-bottom: 1px solid var(--border);
-}
-
-.sidebar-section h3 {
-  font-size: 10px;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: var(--text-subtle);
-  margin-bottom: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
+/* =================== LISTA "MIS SITREP" (modal) =================== */
 .sitrep-list {
   display: flex;
   flex-direction: column;
@@ -273,15 +224,30 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
-.sitrep-item-delete {
-  opacity: 0;
-  color: var(--text-subtle);
-  font-size: 10px;
-  padding: 2px;
-  transition: all 0.1s;
+.sitrep-item-actions {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-shrink: 0;
 }
-.sitrep-item:hover .sitrep-item-delete { opacity: 1; }
-.sitrep-item-delete:hover { color: var(--pending); }
+.sitrep-item-pdf,
+.sitrep-item-delete {
+  color: var(--text-subtle);
+  font-size: 11px;
+  padding: 5px;
+  border-radius: var(--radius);
+  transition: all 0.1s;
+  display: inline-flex;
+  align-items: center;
+}
+.sitrep-item-pdf:hover {
+  background: var(--accent-soft);
+  color: var(--navy);
+}
+.sitrep-item-delete:hover {
+  background: rgba(220, 38, 38, 0.1);
+  color: var(--pending);
+}
 
 .empty-state {
   text-align: center;
@@ -289,50 +255,6 @@
   color: var(--text-subtle);
   font-size: 12px;
 }
-
-.section-nav {
-  display: flex;
-  flex-direction: column;
-  gap: 1px;
-}
-
-.section-nav-link {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 7px 10px;
-  border-radius: var(--radius);
-  font-size: 12.5px;
-  color: var(--text-muted);
-  text-decoration: none;
-  cursor: pointer;
-  transition: all 0.1s;
-}
-.section-nav-link:hover {
-  background: var(--bg-subtle);
-  color: var(--text);
-}
-.section-nav-link.active {
-  background: var(--accent-soft);
-  color: var(--navy);
-  font-weight: 500;
-}
-.section-nav-num {
-  font-family: var(--font-mono);
-  font-size: 10px;
-  width: 18px;
-  text-align: center;
-  color: var(--text-subtle);
-}
-.section-nav-link.active .section-nav-num { color: var(--navy); }
-.section-nav-check {
-  margin-left: auto;
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: var(--border-strong);
-}
-.section-nav-check.filled { background: var(--confirmed); }
 
 
 /* ==========================================================================
@@ -551,7 +473,7 @@ body.map-fullscreen {
 body.map-fullscreen .map-fab { display: none; }
 
 @media (max-width: 1280px) {
-  .main { grid-template-columns: 240px 1fr 320px; }
+  .main { grid-template-columns: 1fr 320px; }
 
   /* Bajo 1280px los botones del topbar con texto completo ("Descargar PDF",
      etc.) ya no caben y desbordan la página horizontalmente; se muestran
@@ -574,51 +496,18 @@ body.map-fullscreen .map-fab { display: none; }
   .topbar-actions .btn svg { width: 16px; height: 16px; }
 }
 @media (max-width: 1024px) {
-  .main { grid-template-columns: 220px 1fr; }
+  .main { grid-template-columns: 1fr; }
   .map-panel { display: none; }
   .map-panel.fullscreen { display: flex; }
   .map-fab { display: flex; }
 }
 
 /* =================== TABLET / MÓVIL =================== */
-/* El panel de mapa ya está oculto desde 1024px; bajo 768px el
-   sidebar pasa a ser un menú lateral deslizable (off-canvas). */
+/* El panel de mapa ya está oculto desde 1024px. */
 @media (max-width: 768px) {
-  .menu-toggle { display: inline-flex; }
-
   .app { grid-template-rows: 56px 1fr; height: 100dvh; }
 
   .main { grid-template-columns: 1fr; }
-
-  .sidebar {
-    position: fixed;
-    top: 56px;
-    bottom: 0;
-    left: 0;
-    width: 280px;
-    max-width: 85vw;
-    z-index: 150;
-    transform: translateX(-100%);
-    transition: transform 0.2s ease;
-    box-shadow: var(--shadow-lg);
-  }
-  .sidebar.open {
-    transform: translateX(0);
-  }
-
-  .sidebar-overlay {
-    display: none;
-    position: fixed;
-    top: 56px;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(20, 38, 72, 0.4);
-    z-index: 140;
-  }
-  .sidebar-overlay.visible {
-    display: block;
-  }
 
   /* Topbar compacta: solo logo + N° de reporte + acciones (scrollables) */
   .topbar { padding: 0 8px; gap: 6px; }
