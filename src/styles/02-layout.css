@@ -552,6 +552,26 @@ body.map-fullscreen .map-fab { display: none; }
 
 @media (max-width: 1280px) {
   .main { grid-template-columns: 240px 1fr 320px; }
+
+  /* Bajo 1280px los botones del topbar con texto completo ("Descargar PDF",
+     etc.) ya no caben y desbordan la página horizontalmente; se muestran
+     solo los íconos y la barra se vuelve scrolleable si aún no entra. */
+  .topbar-actions {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding-bottom: 1px;
+  }
+  .topbar-actions::-webkit-scrollbar { display: none; }
+  .topbar-actions .btn {
+    flex-shrink: 0;
+    padding: 7px 10px;
+  }
+  .topbar-actions .btn:not(.btn-icon) {
+    font-size: 0;
+    gap: 0;
+  }
+  .topbar-actions .btn svg { width: 16px; height: 16px; }
 }
 @media (max-width: 1024px) {
   .main { grid-template-columns: 220px 1fr; }
@@ -611,23 +631,6 @@ body.map-fullscreen .map-fab { display: none; }
   }
   .sitrep-id-block { padding: 6px 8px; gap: 0; }
   .sitrep-id-block .value { font-size: 12px; }
-  .topbar-actions {
-    gap: 6px;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-    padding-bottom: 1px;
-  }
-  .topbar-actions::-webkit-scrollbar { display: none; }
-  .topbar-actions .btn {
-    flex-shrink: 0;
-    padding: 7px 10px;
-  }
-  .topbar-actions .btn:not(.btn-icon) {
-    /* Solo ícono en pantallas angostas; el texto queda para lectores de pantalla */
-    font-size: 0;
-    gap: 0;
-  }
-  .topbar-actions .btn svg { width: 16px; height: 16px; }
+  .topbar-actions { gap: 6px; }
 }
 
